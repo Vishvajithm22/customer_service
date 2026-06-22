@@ -1,5 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: fastapi
 
@@ -48,3 +49,12 @@ spec:
 
         - name: DB_HOST
           value: postgres-service
+
+        volumeMounts:
+        - name: logs-volume
+          mountPath: /app/logs
+
+      volumes:
+      - name: logs-volume
+        persistentVolumeClaim:
+          claimName: logs-pvc
