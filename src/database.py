@@ -6,11 +6,13 @@ from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
 
+DB_HOST = os.getenv("DB_HOST", "db")
+
 DATABASE_URL = (
     f"postgresql+psycopg://"
     f"{os.getenv('POSTGRES_USER')}:"
     f"{os.getenv('POSTGRES_PASSWORD')}"
-    f"@db:5432/"
+    f"@{DB_HOST}:5432/"
     f"{os.getenv('POSTGRES_DB')}"
 )
 
