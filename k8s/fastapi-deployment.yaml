@@ -48,7 +48,10 @@ spec:
               key: POSTGRES_DB
 
         - name: DB_HOST
-          value: postgres-service
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_HOST
 
         volumeMounts:
         - name: logs-volume
