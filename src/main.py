@@ -23,6 +23,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 app=FastAPI()
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 @app.post("/customer")
 def home(c:Customer_Base,db:Session=Depends(get_db)):
     existing_customer=db.query(models.CUSTOMERS).filter(models.CUSTOMERS.email==c.email).first()
