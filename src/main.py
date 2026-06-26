@@ -1,9 +1,10 @@
 from .database import engine, Base, get_db
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy.orm import Session
 import logging
 from src import models
 from fastapi import FastAPI, Depends, HTTPException
+from typing import Annotated
 
 Base.metadata.create_all(bind=engine)
 
@@ -18,8 +19,8 @@ ALLOWED_SECTORS = [
 
 
 class Customer_Base(BaseModel):
-    email: str
-    phone: str
+    email: EmailStr
+    phone: Annotated[str,Field(pattern=r"^[6-9]\d{9}$")]
     name: str
     yearly_sale: float
     sector: str
