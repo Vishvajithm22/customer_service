@@ -8,7 +8,13 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 
 COPY src /app/src
 
-RUN mkdir -p /app/logs
+RUN groupadd -g 1000 appgroup && \
+    useradd -u 1000 -g appgroup -m appuser
+
+RUN mkdir -p /app/logs && \
+    chown -R appuser:appgroup /app
+
+USER appuser
 
 EXPOSE 8000
 

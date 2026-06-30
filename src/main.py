@@ -1,5 +1,5 @@
 from .database import engine, Base, get_db
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from sqlalchemy.orm import Session
 import logging
 from src import models
@@ -19,11 +19,51 @@ ALLOWED_SECTORS = [
 
 
 class Customer_Base(BaseModel):
+
+    name: Annotated[
+        str,
+        Field(
+            min_length=3,
+            max_length=100
+        )
+    ]
+
     email: EmailStr
-    phone: Annotated[str,Field(pattern=r"^[6-9]\d{9}$")]
-    name: str
-    yearly_sale: float
+
+    phone: Annotated[
+        str,
+        Field(
+            pattern=r"^[6-9]\d{9}$"
+        )
+    ]
+
+    yearly_sale: Annotated[
+        float,
+        Field(
+            gt=0,
+            le=1000000000
+        )
+    ]
+
     sector: str
+
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, value):
+
+        value = value.strip()
+
+        if not value:
+            raise ValueError(
+                "Name cannot be empty"
+            )
+
+        if not value.replace(" ", "").isalpha():
+            raise ValueError(
+                "Name must contain only alphabets"
+            )
+
+        return value
 
 
 def assign_grade_category(yearly_sale: float):
