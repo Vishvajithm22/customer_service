@@ -11,8 +11,8 @@ class CUSTOMERS(Base):
 
     name = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
+    company = Column(String, nullable=False)
     phone = Column(String, nullable=False)
-
     yearly_sale = Column(Float, nullable=False)
     sector = Column(String, nullable=False)
     grade = Column(String, nullable=False)

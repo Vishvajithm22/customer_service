@@ -54,6 +54,7 @@ for _ in range(1000):
 
     customer = {
         "name": f"{first} {last}",
+        "company": company,
         "email": email,
         "phone": str(random.randint(6000000000, 9999999999)),
         "yearly_sale": random.randint(

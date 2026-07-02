@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
 
-URL = "http://localhost:32187/customer"
+URL = "http://localhost:31509/customer"
 
 df = pd.read_excel("customers.xlsx")
 
@@ -12,6 +12,7 @@ for _, row in df.iterrows():
 
     customer = {
         "name": row["name"],
+        "company": row["company"],
         "email": row["email"],
         "phone": str(row["phone"]),
         "yearly_sale": float(row["yearly_sale"]),

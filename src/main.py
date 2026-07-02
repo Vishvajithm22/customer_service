@@ -29,6 +29,7 @@ class Customer_Base(BaseModel):
     ]
 
     email: EmailStr
+    company: Annotated[str,Field(min_length=2, max_length=100)]
 
     phone: Annotated[
         str,
@@ -128,6 +129,7 @@ def home(c: Customer_Base, db: Session = Depends(get_db)):
 
         new = models.CUSTOMERS(
             name=c.name,
+            company=c.company,
             email=c.email,
             phone=c.phone,
             yearly_sale=c.yearly_sale,
@@ -203,6 +205,7 @@ def home3(id: int, c: Customer_Base, db: Session = Depends(get_db)):
     grade, category = assign_grade_category(c.yearly_sale)
 
     customer.name = c.name
+    customer.company = c.company
     customer.email = c.email
     customer.phone = c.phone
     customer.yearly_sale = c.yearly_sale
