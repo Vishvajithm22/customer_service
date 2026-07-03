@@ -1,15 +1,16 @@
 apiVersion: v1
 kind: Service
+
 metadata:
-  name: {{ include "customer-service.fullname" . }}
-  labels:
-    {{- include "customer-service.labels" . | nindent 4 }}
+  name: {{ .Release.Name }}-fastapi-service
+
 spec:
   type: {{ .Values.service.type }}
+
+  selector:
+    app: fastapi
+
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    {{- include "customer-service.selectorLabels" . | nindent 4 }}
+      targetPort: {{ .Values.service.targetPort }}
+      nodePort: {{ .Values.service.nodePort }}
