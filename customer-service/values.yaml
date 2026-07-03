@@ -1,0 +1,30 @@
+replicaCount: 3
+
+image:
+  repository: alien00784400/fastapi-customer-service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8000
+  targetPort: 8000
+  nodePort: 31509
+
+postgres:
+  image: postgres:17
+  database: project
+  username: postgres
+  password: ""
+  port: 5432
+
+persistence:
+  postgres:
+    size: 1Gi
+
+  logs:
+    size: 1Gi
+
+ingress:
+  enabled: true
+  host: localhost

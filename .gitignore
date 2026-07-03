@@ -20,3 +20,4 @@ __pycache__/
 .idea/
 k8s/secret.yaml
 customers.xlsx
+values-local.yaml

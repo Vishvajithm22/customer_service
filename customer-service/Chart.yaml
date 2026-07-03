@@ -1,0 +1,11 @@
+apiVersion: v2
+
+name: customer-service
+
+description: Helm chart for FastAPI Customer Management System
+
+type: application
+
+version: 0.1.0
+
+appVersion: "1.0.0"
