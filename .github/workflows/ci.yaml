@@ -50,5 +50,6 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          helm upgrade --install customer-service ./customer-service -f customer-service/values.yaml
-          
+          helm upgrade --install customer-service ./customer-service \
+            -f customer-service/values.yaml \
+            --set postgres.password="${{ secrets.POSTGRES_PASSWORD }}"
