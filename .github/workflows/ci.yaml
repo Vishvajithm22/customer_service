@@ -49,7 +49,4 @@ jobs:
           docker push alien00784400/fastapi-customer-service:latest
 
       - name: Deploy to Kubernetes
-        run: |
-          helm upgrade --install customer-service ./customer-service \
-            -f customer-service/values.yaml \
-            --set postgres.password="${{ secrets.POSTGRES_PASSWORD }}"
+        run: helm upgrade --install customer-service ./customer-service -f customer-service/values.yaml --set postgres.password="${{ secrets.POSTGRES_PASSWORD }}"
