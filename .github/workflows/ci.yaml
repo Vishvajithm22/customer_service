@@ -52,6 +52,3 @@ jobs:
         run: |
           helm upgrade --install customer-service ./customer-service -f customer-service/values.yaml
           
-      - name: Restart FastAPI Deployment
-        run: |
-          kubectl rollout restart deployment/customer-service-fastapi
