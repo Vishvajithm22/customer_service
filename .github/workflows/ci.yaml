@@ -47,3 +47,7 @@ jobs:
         run: |
           docker tag fastapi-ci alien00784400/fastapi-customer-service:latest
           docker push alien00784400/fastapi-customer-service:latest
+          
+      - name: Deploy to Kubernetes
+        run: |
+          helm upgrade --install customer-service ./customer-service -f customer-service/values-local.yaml
