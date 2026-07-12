@@ -2,6 +2,8 @@ from .database import Base
 from sqlalchemy import Column, Integer, String, Float
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy import func
+from enum import Enum as PyEnum
+from sqlalchemy import Enum
 
 
 class CUSTOMERS(Base):
@@ -22,4 +24,26 @@ class CUSTOMERS(Base):
         TIMESTAMP(timezone=True),
         nullable=False,
         server_default=func.now()
+    )
+
+class UserRole(PyEnum):
+    ADMIN = "ADMIN"
+    MANAGER = "MANAGER"
+    USER = "USER"
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    username = Column(String(50), unique=True, nullable=False)
+    email = Column(String(100), unique=True, nullable=False)
+
+    hashed_password = Column(String, nullable=False)
+
+    role = Column(
+        Enum(UserRole),
+        default=UserRole.USER,
+        nullable=False
     )
