@@ -5,6 +5,7 @@ import logging
 from src import models
 from fastapi import FastAPI, Depends, HTTPException
 from typing import Annotated
+from src.auth import router as auth_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -95,6 +96,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+
+app.include_router(auth_router)
 
 
 @app.get("/health")
