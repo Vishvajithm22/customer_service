@@ -6,6 +6,7 @@ from src.schemas import UserRegister
 from src.security import hash_password
 from src.schemas import UserLogin
 from src.security import verify_password
+from src.jwt_handler import create_access_token
 
 router = APIRouter(
     prefix="/auth",
@@ -42,6 +43,7 @@ def register(user: UserRegister, db: Session = Depends(get_db)):
 @router.post("/login")
 def login(user: UserLogin, db: Session = Depends(get_db)):
 
+
     db_user = db.query(User).filter(
         User.username == user.username
     ).first()
@@ -61,6 +63,15 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
             detail="Invalid username or password"
         )
 
+ 
+    access_token = create_access_token(
+        {
+            "sub": db_user.username,
+            "role": db_user.role.value
+        }
+    )
+
     return {
-        "message": "Login Successful"
+        "access_token": access_token,
+        "token_type": "bearer"
     }
