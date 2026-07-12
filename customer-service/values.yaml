@@ -17,6 +17,9 @@ postgres:
   username: postgres
   password: ""
   port: 5432
+  
+jwt:
+  secretKey: ""
 
 persistence:
   postgres:

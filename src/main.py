@@ -7,6 +7,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from typing import Annotated
 from src.auth import router as auth_router
 from src.dependencies import get_current_user
+from src.models import User
 
 Base.metadata.create_all(bind=engine)
 
