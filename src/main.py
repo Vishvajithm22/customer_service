@@ -5,9 +5,6 @@ import logging
 from src import models
 from fastapi import FastAPI, Depends, HTTPException
 from typing import Annotated
-from src.auth import router as auth_router
-from src.dependencies import get_current_user
-from src.models import User
 
 Base.metadata.create_all(bind=engine)
 
@@ -99,7 +96,6 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-app.include_router(auth_router)
 
 
 @app.get("/health")
@@ -108,7 +104,7 @@ def health():
 
 
 @app.post("/customer")
-def home(c: Customer_Base, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+def home(c: Customer_Base, db: Session = Depends(get_db)):
 
     existing_customer = db.query(models.CUSTOMERS).filter(
         models.CUSTOMERS.email == c.email
@@ -161,14 +157,14 @@ def home(c: Customer_Base, current_user: User = Depends(get_current_user), db: S
 
 
 @app.get("/customer2")
-def home2(db: Session = Depends(get_db),current_user: User = Depends(get_current_user)):
+def home2(db: Session = Depends(get_db)):
     customers = db.query(models.CUSTOMERS).all()
     logger.info("Fetched all customers")
     return customers
 
 
 @app.get("/customer2/{id}")
-def home5(id: int,current_user: User = Depends(get_current_user),db: Session = Depends(get_db)):
+def home5(id: int,db: Session = Depends(get_db)):
 
     customer = db.query(models.CUSTOMERS).filter(
         models.CUSTOMERS.id == id
@@ -187,7 +183,7 @@ def home5(id: int,current_user: User = Depends(get_current_user),db: Session = D
 
 
 @app.put("/customer3/{id}")
-def home3(id: int, c: Customer_Base,current_user: User = Depends(get_current_user),db: Session = Depends(get_db)):
+def home3(id: int,db: Session = Depends(get_db)):
 
     customer = db.query(models.CUSTOMERS).filter(
         models.CUSTOMERS.id == id
@@ -230,7 +226,7 @@ def home3(id: int, c: Customer_Base,current_user: User = Depends(get_current_use
 
 
 @app.delete("/customer4/{id}")
-def home4(id: int,current_user: User = Depends(get_current_user),db: Session = Depends(get_db)):
+def home4(id: int,db: Session = Depends(get_db)):
 
     customer = db.query(models.CUSTOMERS).filter(
         models.CUSTOMERS.id == id
@@ -256,7 +252,6 @@ def home4(id: int,current_user: User = Depends(get_current_user),db: Session = D
 @app.get("/customers/category/{category}")
 def get_customers_by_category(
     category: str,
-    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
