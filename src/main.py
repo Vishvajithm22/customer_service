@@ -183,7 +183,7 @@ def home5(id: int,db: Session = Depends(get_db)):
 
 
 @app.put("/customer3/{id}")
-def home3(id: int,db: Session = Depends(get_db)):
+def home3(id: int,c: Customer_Base,db: Session = Depends(get_db)):
 
     customer = db.query(models.CUSTOMERS).filter(
         models.CUSTOMERS.id == id

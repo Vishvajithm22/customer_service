@@ -1,0 +1,6 @@
+-r requirements.txt
+pandas==3.0.3
+numpy==2.5.0
+openpyxl==3.1.5
+requests==2.34.2
+Faker==40.23.0
