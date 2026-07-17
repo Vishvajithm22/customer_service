@@ -5,6 +5,7 @@ import logging
 from src import models
 from fastapi import FastAPI, Depends, HTTPException
 from typing import Annotated
+from prometheus_fastapi_instrumentator import Instrumentator
 
 Base.metadata.create_all(bind=engine)
 
@@ -95,6 +96,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+Instrumentator().instrument(app).expose(app)
 
 
 
