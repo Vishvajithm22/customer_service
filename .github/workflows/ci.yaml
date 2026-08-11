@@ -9,6 +9,9 @@ jobs:
   build:
 
     runs-on: self-hosted
+    defaults:
+      run:
+        shell: powershell
 
     steps:
 
